@@ -1,0 +1,32 @@
+digraph AST {
+        node [color=silver shape=box style=filled]
+        edge [arrowhead=none]
+        node01 [label=Program]
+        node01 -> node02
+        node01 -> node03
+        node04 [label="101 PRINT"]
+        node05 [label="String
+value: TESTING ARRAYS"]
+        node04 -> node05
+        node01 -> node04
+        node06 [label="102 LET"]
+        node07 [label="C$"]
+        node06 -> node07
+        node06 -> "HELLO WORLD"
+        node01 -> node06
+        node08 [label="104 LET"]
+        node09 [label="C$"]
+        node08 -> node09
+        node08 -> "GOODBYE WORLD"
+        node01 -> node08
+        node10 [label="105 PRINT"]
+        node11 [label="+" color=forestgreen shape=circle]
+        node12 [label="C$"]
+        node11 -> node12
+        node13 [label="C$"]
+        node11 -> node13
+        node10 -> node11
+        node01 -> node10
+        node14 [label=END]
+        node01 -> node14
+}

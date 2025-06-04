@@ -1,0 +1,9 @@
+30 FOR Y = 1 TO 5
+35 PRINT Y
+36      FOR X = 0 TO 3
+37      PRINT X
+38      NEXT X
+59 NEXT Y
+60 END
+
+

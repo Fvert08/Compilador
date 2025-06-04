@@ -1,0 +1,2 @@
+010 DEF FNI(N) = N - 7*INT(N/7)
+020 END

@@ -1,0 +1,3353 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> error
+Rule 2     program -> _1_statement_repeat
+Rule 3     _1_statement_repeat -> _1_statement_items
+Rule 4     _1_statement_repeat -> <empty>
+Rule 5     _1_statement_items -> _1_statement_items _1_statement_item
+Rule 6     _1_statement_items -> _1_statement_item
+Rule 7     _1_statement_item -> statement
+Rule 8     statement -> INTEGER error
+Rule 9     statement -> INTEGER command NEWLINE
+Rule 10    command -> ID ( INTEGER ) = STRING
+Rule 11    command -> DIM error
+Rule 12    command -> DIM dimlist
+Rule 13    command -> RETURN
+Rule 14    command -> GOSUB error
+Rule 15    command -> GOSUB INTEGER
+Rule 16    command -> DEF FN ( error ) = expr
+Rule 17    command -> DEF FN ( ID ) = error
+Rule 18    command -> DEF FN ( ID ) = expr
+Rule 19    command -> STOP
+Rule 20    command -> REM
+Rule 21    command -> END
+Rule 22    command -> NEXT error
+Rule 23    command -> NEXT ID
+Rule 24    command -> FOR ID = expr TO expr error
+Rule 25    command -> FOR ID = expr TO error optstep
+Rule 26    command -> FOR ID = error TO expr optstep
+Rule 27    command -> FOR ID = expr TO expr optstep
+Rule 28    command -> IF relexpr THEN error
+Rule 29    command -> IF error THEN INTEGER
+Rule 30    command -> IF STRING relexpr THEN INTEGER
+Rule 31    command -> IF relexpr THEN INTEGER
+Rule 32    command -> GOTO error
+Rule 33    command -> GOTO INTEGER
+Rule 34    command -> PRINT
+Rule 35    command -> PRINT error
+Rule 36    command -> PRINT plist _2_optend_optional
+Rule 37    _2_optend_optional -> optend
+Rule 38    _2_optend_optional -> <empty>
+Rule 39    command -> INPUT error
+Rule 40    command -> INPUT _3_STRING_0x2c_optional varlist
+Rule 41    _3_STRING_0x2c_optional -> STRING ,
+Rule 42    _3_STRING_0x2c_optional -> <empty>
+Rule 43    command -> DATA error
+Rule 44    command -> DATA datalist
+Rule 45    command -> READ error
+Rule 46    command -> READ varlist
+Rule 47    command -> LET variable = error
+Rule 48    command -> LET variable = STRING
+Rule 49    command -> LET variable = expr
+Rule 50    command -> RESTORE
+Rule 51    expr -> variable
+Rule 52    expr -> - expr  [precedence=right, level=4]
+Rule 53    expr -> ( expr )
+Rule 54    expr -> BLTIN ( STRING )
+Rule 55    expr -> BLTIN ( _4_exprlist_optional )
+Rule 56    _4_exprlist_optional -> exprlist
+Rule 57    _4_exprlist_optional -> <empty>
+Rule 58    expr -> FLOAT
+Rule 59    expr -> INTEGER
+Rule 60    expr -> expr ^ expr  [precedence=left, level=3]
+Rule 61    expr -> expr / expr  [precedence=left, level=2]
+Rule 62    expr -> expr * expr  [precedence=left, level=2]
+Rule 63    expr -> expr - expr  [precedence=left, level=1]
+Rule 64    expr -> expr + expr  [precedence=left, level=1]
+Rule 65    expr -> variable + INTEGER
+Rule 66    expr -> variable + variable  [precedence=left, level=1]
+Rule 67    expr -> variable + STRING
+Rule 68    expr -> STRING + variable  [precedence=left, level=1]
+Rule 69    expr -> STRING + STRING
+Rule 70    datalist -> STRING _5_0x2c_STRING_repeat
+Rule 71    _5_0x2c_STRING_repeat -> _5_0x2c_STRING_items
+Rule 72    _5_0x2c_STRING_repeat -> <empty>
+Rule 73    _5_0x2c_STRING_items -> _5_0x2c_STRING_items _5_0x2c_STRING_item
+Rule 74    _5_0x2c_STRING_items -> _5_0x2c_STRING_item
+Rule 75    _5_0x2c_STRING_item -> , STRING
+Rule 76    datalist -> number _6_0x2c_number_repeat
+Rule 77    _6_0x2c_number_repeat -> _6_0x2c_number_items
+Rule 78    _6_0x2c_number_repeat -> <empty>
+Rule 79    _6_0x2c_number_items -> _6_0x2c_number_items _6_0x2c_number_item
+Rule 80    _6_0x2c_number_items -> _6_0x2c_number_item
+Rule 81    _6_0x2c_number_item -> , number
+Rule 82    optend -> ;
+Rule 83    optend -> ,
+Rule 84    optstep -> empty
+Rule 85    optstep -> STEP expr
+Rule 86    dimlist -> dimitem _7_0x2c_dimitem_repeat
+Rule 87    _7_0x2c_dimitem_repeat -> _7_0x2c_dimitem_items
+Rule 88    _7_0x2c_dimitem_repeat -> <empty>
+Rule 89    _7_0x2c_dimitem_items -> _7_0x2c_dimitem_items _7_0x2c_dimitem_item
+Rule 90    _7_0x2c_dimitem_items -> _7_0x2c_dimitem_item
+Rule 91    _7_0x2c_dimitem_item -> , dimitem
+Rule 92    dimitem -> ID ( INTEGER , INTEGER )
+Rule 93    dimitem -> ID ( INTEGER )
+Rule 94    exprlist -> exprlist , expr
+Rule 95    exprlist -> expr
+Rule 96    relexpr -> STRING GT STRING
+Rule 97    relexpr -> STRING GE STRING
+Rule 98    relexpr -> STRING NE STRING
+Rule 99    relexpr -> STRING = STRING
+Rule 100   relexpr -> STRING LE STRING
+Rule 101   relexpr -> STRING LT STRING
+Rule 102   relexpr -> expr GT expr
+Rule 103   relexpr -> expr GE expr
+Rule 104   relexpr -> expr NE expr
+Rule 105   relexpr -> expr = expr
+Rule 106   relexpr -> expr LE expr
+Rule 107   relexpr -> expr LT expr
+Rule 108   variable -> ID ( expr , expr )
+Rule 109   variable -> ID ( expr )
+Rule 110   variable -> ID
+Rule 111   varlist -> variable _8_0x2c_variable_repeat
+Rule 112   _8_0x2c_variable_repeat -> _8_0x2c_variable_items
+Rule 113   _8_0x2c_variable_repeat -> <empty>
+Rule 114   _8_0x2c_variable_items -> _8_0x2c_variable_items _8_0x2c_variable_item
+Rule 115   _8_0x2c_variable_items -> _8_0x2c_variable_item
+Rule 116   _8_0x2c_variable_item -> , variable
+Rule 117   number -> - FLOAT
+Rule 118   number -> - INTEGER
+Rule 119   number -> FLOAT
+Rule 120   number -> INTEGER
+Rule 121   pitem -> STRING expr
+Rule 122   pitem -> expr
+Rule 123   pitem -> STRING
+Rule 124   plist -> pitem
+Rule 125   plist -> plist , pitem
+Rule 126   empty -> <empty>
+
+Terminals, with rules where they appear:
+
+(                    : 10 16 17 18 53 54 55 92 93 108 109
+)                    : 10 16 17 18 53 54 55 92 93 108 109
+*                    : 62
++                    : 64 65 66 67 68 69
+,                    : 41 75 81 83 91 92 94 108 116 125
+-                    : 52 63 117 118
+/                    : 61
+;                    : 82
+=                    : 10 16 17 18 24 25 26 27 47 48 49 99 105
+BLTIN                : 54 55
+DATA                 : 43 44
+DEF                  : 16 17 18
+DIM                  : 11 12
+END                  : 21
+FLOAT                : 58 117 119
+FN                   : 16 17 18
+FOR                  : 24 25 26 27
+GE                   : 97 103
+GOSUB                : 14 15
+GOTO                 : 32 33
+GT                   : 96 102
+ID                   : 10 17 18 23 24 25 26 27 92 93 108 109 110
+IF                   : 28 29 30 31
+INPUT                : 39 40
+INTEGER              : 8 9 10 15 29 30 31 33 59 65 92 92 93 118 120
+LE                   : 100 106
+LET                  : 47 48 49
+LT                   : 101 107
+NE                   : 98 104
+NEWLINE              : 9
+NEXT                 : 22 23
+PRINT                : 34 35 36
+READ                 : 45 46
+REM                  : 20
+RESTORE              : 50
+RETURN               : 13
+STEP                 : 85
+STOP                 : 19
+STRING               : 10 30 41 48 54 67 68 69 69 70 75 96 96 97 97 98 98 99 99 100 100 101 101 121 123
+THEN                 : 28 29 30 31
+TO                   : 24 25 26 27
+^                    : 60
+error                : 1 8 11 14 16 17 22 24 25 26 28 29 32 35 39 43 45 47
+
+Nonterminals, with rules where they appear:
+
+_1_statement_item    : 5 6
+_1_statement_items   : 3 5
+_1_statement_repeat  : 2
+_2_optend_optional   : 36
+_3_STRING_0x2c_optional : 40
+_4_exprlist_optional : 55
+_5_0x2c_STRING_item  : 73 74
+_5_0x2c_STRING_items : 71 73
+_5_0x2c_STRING_repeat : 70
+_6_0x2c_number_item  : 79 80
+_6_0x2c_number_items : 77 79
+_6_0x2c_number_repeat : 76
+_7_0x2c_dimitem_item : 89 90
+_7_0x2c_dimitem_items : 87 89
+_7_0x2c_dimitem_repeat : 86
+_8_0x2c_variable_item : 114 115
+_8_0x2c_variable_items : 112 114
+_8_0x2c_variable_repeat : 111
+command              : 9
+datalist             : 44
+dimitem              : 86 91
+dimlist              : 12
+empty                : 84
+expr                 : 16 18 24 24 25 26 27 27 49 52 53 60 60 61 61 62 62 63 63 64 64 85 94 95 102 102 103 103 104 104 105 105 106 106 107 107 108 108 109 121 122
+exprlist             : 56 94
+number               : 76 81
+optend               : 37
+optstep              : 25 26 27
+pitem                : 124 125
+plist                : 36 125
+program              : 0
+relexpr              : 28 30 31
+statement            : 7
+variable             : 47 48 49 51 65 66 66 67 68 111 116
+varlist              : 40 46
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . error
+    (2) program -> . _1_statement_repeat
+    (3) _1_statement_repeat -> . _1_statement_items
+    (4) _1_statement_repeat -> .
+    (5) _1_statement_items -> . _1_statement_items _1_statement_item
+    (6) _1_statement_items -> . _1_statement_item
+    (7) _1_statement_item -> . statement
+    (8) statement -> . INTEGER error
+    (9) statement -> . INTEGER command NEWLINE
+    error           shift and go to state 2
+    $end            reduce using rule 4 (_1_statement_repeat -> .)
+    INTEGER         shift and go to state 7
+
+    program                        shift and go to state 1
+    _1_statement_repeat            shift and go to state 3
+    _1_statement_items             shift and go to state 4
+    _1_statement_item              shift and go to state 5
+    statement                      shift and go to state 6
+
+state 1
+
+    (0) S' -> program .
+
+
+state 2
+
+    (1) program -> error .
+    $end            reduce using rule 1 (program -> error .)
+
+
+state 3
+
+    (2) program -> _1_statement_repeat .
+    $end            reduce using rule 2 (program -> _1_statement_repeat .)
+
+
+state 4
+
+    (3) _1_statement_repeat -> _1_statement_items .
+    (5) _1_statement_items -> _1_statement_items . _1_statement_item
+    (7) _1_statement_item -> . statement
+    (8) statement -> . INTEGER error
+    (9) statement -> . INTEGER command NEWLINE
+    $end            reduce using rule 3 (_1_statement_repeat -> _1_statement_items .)
+    INTEGER         shift and go to state 7
+
+    _1_statement_item              shift and go to state 8
+    statement                      shift and go to state 6
+
+state 5
+
+    (6) _1_statement_items -> _1_statement_item .
+    INTEGER         reduce using rule 6 (_1_statement_items -> _1_statement_item .)
+    $end            reduce using rule 6 (_1_statement_items -> _1_statement_item .)
+
+
+state 6
+
+    (7) _1_statement_item -> statement .
+    INTEGER         reduce using rule 7 (_1_statement_item -> statement .)
+    $end            reduce using rule 7 (_1_statement_item -> statement .)
+
+
+state 7
+
+    (8) statement -> INTEGER . error
+    (9) statement -> INTEGER . command NEWLINE
+    (10) command -> . ID ( INTEGER ) = STRING
+    (11) command -> . DIM error
+    (12) command -> . DIM dimlist
+    (13) command -> . RETURN
+    (14) command -> . GOSUB error
+    (15) command -> . GOSUB INTEGER
+    (16) command -> . DEF FN ( error ) = expr
+    (17) command -> . DEF FN ( ID ) = error
+    (18) command -> . DEF FN ( ID ) = expr
+    (19) command -> . STOP
+    (20) command -> . REM
+    (21) command -> . END
+    (22) command -> . NEXT error
+    (23) command -> . NEXT ID
+    (24) command -> . FOR ID = expr TO expr error
+    (25) command -> . FOR ID = expr TO error optstep
+    (26) command -> . FOR ID = error TO expr optstep
+    (27) command -> . FOR ID = expr TO expr optstep
+    (28) command -> . IF relexpr THEN error
+    (29) command -> . IF error THEN INTEGER
+    (30) command -> . IF STRING relexpr THEN INTEGER
+    (31) command -> . IF relexpr THEN INTEGER
+    (32) command -> . GOTO error
+    (33) command -> . GOTO INTEGER
+    (34) command -> . PRINT
+    (35) command -> . PRINT error
+    (36) command -> . PRINT plist _2_optend_optional
+    (39) command -> . INPUT error
+    (40) command -> . INPUT _3_STRING_0x2c_optional varlist
+    (43) command -> . DATA error
+    (44) command -> . DATA datalist
+    (45) command -> . READ error
+    (46) command -> . READ varlist
+    (47) command -> . LET variable = error
+    (48) command -> . LET variable = STRING
+    (49) command -> . LET variable = expr
+    (50) command -> . RESTORE
+    error           shift and go to state 9
+    ID              shift and go to state 11
+    DIM             shift and go to state 12
+    RETURN          shift and go to state 13
+    GOSUB           shift and go to state 14
+    DEF             shift and go to state 15
+    STOP            shift and go to state 16
+    REM             shift and go to state 17
+    END             shift and go to state 18
+    NEXT            shift and go to state 19
+    FOR             shift and go to state 20
+    IF              shift and go to state 21
+    GOTO            shift and go to state 22
+    PRINT           shift and go to state 23
+    INPUT           shift and go to state 24
+    DATA            shift and go to state 25
+    READ            shift and go to state 26
+    LET             shift and go to state 27
+    RESTORE         shift and go to state 28
+
+    command                        shift and go to state 10
+
+state 8
+
+    (5) _1_statement_items -> _1_statement_items _1_statement_item .
+    INTEGER         reduce using rule 5 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    $end            reduce using rule 5 (_1_statement_items -> _1_statement_items _1_statement_item .)
+
+
+state 9
+
+    (8) statement -> INTEGER error .
+    INTEGER         reduce using rule 8 (statement -> INTEGER error .)
+    $end            reduce using rule 8 (statement -> INTEGER error .)
+
+
+state 10
+
+    (9) statement -> INTEGER command . NEWLINE
+    NEWLINE         shift and go to state 29
+
+
+state 11
+
+    (10) command -> ID . ( INTEGER ) = STRING
+    (               shift and go to state 30
+
+
+state 12
+
+    (11) command -> DIM . error
+    (12) command -> DIM . dimlist
+    (86) dimlist -> . dimitem _7_0x2c_dimitem_repeat
+    (92) dimitem -> . ID ( INTEGER , INTEGER )
+    (93) dimitem -> . ID ( INTEGER )
+    error           shift and go to state 31
+    ID              shift and go to state 34
+
+    dimlist                        shift and go to state 32
+    dimitem                        shift and go to state 33
+
+state 13
+
+    (13) command -> RETURN .
+    NEWLINE         reduce using rule 13 (command -> RETURN .)
+
+
+state 14
+
+    (14) command -> GOSUB . error
+    (15) command -> GOSUB . INTEGER
+    error           shift and go to state 35
+    INTEGER         shift and go to state 36
+
+
+state 15
+
+    (16) command -> DEF . FN ( error ) = expr
+    (17) command -> DEF . FN ( ID ) = error
+    (18) command -> DEF . FN ( ID ) = expr
+    FN              shift and go to state 37
+
+
+state 16
+
+    (19) command -> STOP .
+    NEWLINE         reduce using rule 19 (command -> STOP .)
+
+
+state 17
+
+    (20) command -> REM .
+    NEWLINE         reduce using rule 20 (command -> REM .)
+
+
+state 18
+
+    (21) command -> END .
+    NEWLINE         reduce using rule 21 (command -> END .)
+
+
+state 19
+
+    (22) command -> NEXT . error
+    (23) command -> NEXT . ID
+    error           shift and go to state 38
+    ID              shift and go to state 39
+
+
+state 20
+
+    (24) command -> FOR . ID = expr TO expr error
+    (25) command -> FOR . ID = expr TO error optstep
+    (26) command -> FOR . ID = error TO expr optstep
+    (27) command -> FOR . ID = expr TO expr optstep
+    ID              shift and go to state 40
+
+
+state 21
+
+    (28) command -> IF . relexpr THEN error
+    (29) command -> IF . error THEN INTEGER
+    (30) command -> IF . STRING relexpr THEN INTEGER
+    (31) command -> IF . relexpr THEN INTEGER
+    (96) relexpr -> . STRING GT STRING
+    (97) relexpr -> . STRING GE STRING
+    (98) relexpr -> . STRING NE STRING
+    (99) relexpr -> . STRING = STRING
+    (100) relexpr -> . STRING LE STRING
+    (101) relexpr -> . STRING LT STRING
+    (102) relexpr -> . expr GT expr
+    (103) relexpr -> . expr GE expr
+    (104) relexpr -> . expr NE expr
+    (105) relexpr -> . expr = expr
+    (106) relexpr -> . expr LE expr
+    (107) relexpr -> . expr LT expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    error           shift and go to state 42
+    STRING          shift and go to state 44
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    ID              shift and go to state 51
+
+    relexpr                        shift and go to state 41
+    expr                           shift and go to state 45
+    variable                       shift and go to state 46
+
+state 22
+
+    (32) command -> GOTO . error
+    (33) command -> GOTO . INTEGER
+    error           shift and go to state 52
+    INTEGER         shift and go to state 53
+
+
+state 23
+
+    (34) command -> PRINT .
+    (35) command -> PRINT . error
+    (36) command -> PRINT . plist _2_optend_optional
+    (124) plist -> . pitem
+    (125) plist -> . plist , pitem
+    (121) pitem -> . STRING expr
+    (122) pitem -> . expr
+    (123) pitem -> . STRING
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    NEWLINE         reduce using rule 34 (command -> PRINT .)
+    error           shift and go to state 54
+    STRING          shift and go to state 57
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    ID              shift and go to state 51
+
+    plist                          shift and go to state 55
+    pitem                          shift and go to state 56
+    expr                           shift and go to state 58
+    variable                       shift and go to state 46
+
+state 24
+
+    (39) command -> INPUT . error
+    (40) command -> INPUT . _3_STRING_0x2c_optional varlist
+    (41) _3_STRING_0x2c_optional -> . STRING ,
+    (42) _3_STRING_0x2c_optional -> .
+    error           shift and go to state 59
+    STRING          shift and go to state 61
+    ID              reduce using rule 42 (_3_STRING_0x2c_optional -> .)
+
+    _3_STRING_0x2c_optional        shift and go to state 60
+
+state 25
+
+    (43) command -> DATA . error
+    (44) command -> DATA . datalist
+    (70) datalist -> . STRING _5_0x2c_STRING_repeat
+    (76) datalist -> . number _6_0x2c_number_repeat
+    (117) number -> . - FLOAT
+    (118) number -> . - INTEGER
+    (119) number -> . FLOAT
+    (120) number -> . INTEGER
+    error           shift and go to state 62
+    STRING          shift and go to state 64
+    -               shift and go to state 66
+    FLOAT           shift and go to state 67
+    INTEGER         shift and go to state 68
+
+    datalist                       shift and go to state 63
+    number                         shift and go to state 65
+
+state 26
+
+    (45) command -> READ . error
+    (46) command -> READ . varlist
+    (111) varlist -> . variable _8_0x2c_variable_repeat
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    error           shift and go to state 69
+    ID              shift and go to state 51
+
+    varlist                        shift and go to state 70
+    variable                       shift and go to state 71
+
+state 27
+
+    (47) command -> LET . variable = error
+    (48) command -> LET . variable = STRING
+    (49) command -> LET . variable = expr
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    ID              shift and go to state 51
+
+    variable                       shift and go to state 72
+
+state 28
+
+    (50) command -> RESTORE .
+    NEWLINE         reduce using rule 50 (command -> RESTORE .)
+
+
+state 29
+
+    (9) statement -> INTEGER command NEWLINE .
+    INTEGER         reduce using rule 9 (statement -> INTEGER command NEWLINE .)
+    $end            reduce using rule 9 (statement -> INTEGER command NEWLINE .)
+
+
+state 30
+
+    (10) command -> ID ( . INTEGER ) = STRING
+    INTEGER         shift and go to state 73
+
+
+state 31
+
+    (11) command -> DIM error .
+    NEWLINE         reduce using rule 11 (command -> DIM error .)
+
+
+state 32
+
+    (12) command -> DIM dimlist .
+    NEWLINE         reduce using rule 12 (command -> DIM dimlist .)
+
+
+state 33
+
+    (86) dimlist -> dimitem . _7_0x2c_dimitem_repeat
+    (87) _7_0x2c_dimitem_repeat -> . _7_0x2c_dimitem_items
+    (88) _7_0x2c_dimitem_repeat -> .
+    (89) _7_0x2c_dimitem_items -> . _7_0x2c_dimitem_items _7_0x2c_dimitem_item
+    (90) _7_0x2c_dimitem_items -> . _7_0x2c_dimitem_item
+    (91) _7_0x2c_dimitem_item -> . , dimitem
+    NEWLINE         reduce using rule 88 (_7_0x2c_dimitem_repeat -> .)
+    ,               shift and go to state 77
+
+    _7_0x2c_dimitem_repeat         shift and go to state 74
+    _7_0x2c_dimitem_items          shift and go to state 75
+    _7_0x2c_dimitem_item           shift and go to state 76
+
+state 34
+
+    (92) dimitem -> ID . ( INTEGER , INTEGER )
+    (93) dimitem -> ID . ( INTEGER )
+    (               shift and go to state 78
+
+
+state 35
+
+    (14) command -> GOSUB error .
+    NEWLINE         reduce using rule 14 (command -> GOSUB error .)
+
+
+state 36
+
+    (15) command -> GOSUB INTEGER .
+    NEWLINE         reduce using rule 15 (command -> GOSUB INTEGER .)
+
+
+state 37
+
+    (16) command -> DEF FN . ( error ) = expr
+    (17) command -> DEF FN . ( ID ) = error
+    (18) command -> DEF FN . ( ID ) = expr
+    (               shift and go to state 79
+
+
+state 38
+
+    (22) command -> NEXT error .
+    NEWLINE         reduce using rule 22 (command -> NEXT error .)
+
+
+state 39
+
+    (23) command -> NEXT ID .
+    NEWLINE         reduce using rule 23 (command -> NEXT ID .)
+
+
+state 40
+
+    (24) command -> FOR ID . = expr TO expr error
+    (25) command -> FOR ID . = expr TO error optstep
+    (26) command -> FOR ID . = error TO expr optstep
+    (27) command -> FOR ID . = expr TO expr optstep
+    =               shift and go to state 80
+
+
+state 41
+
+    (28) command -> IF relexpr . THEN error
+    (31) command -> IF relexpr . THEN INTEGER
+    THEN            shift and go to state 81
+
+
+state 42
+
+    (29) command -> IF error . THEN INTEGER
+    THEN            shift and go to state 82
+
+
+state 43
+
+    (59) expr -> INTEGER .
+    GT              reduce using rule 59 (expr -> INTEGER .)
+    GE              reduce using rule 59 (expr -> INTEGER .)
+    NE              reduce using rule 59 (expr -> INTEGER .)
+    =               reduce using rule 59 (expr -> INTEGER .)
+    LE              reduce using rule 59 (expr -> INTEGER .)
+    LT              reduce using rule 59 (expr -> INTEGER .)
+    ^               reduce using rule 59 (expr -> INTEGER .)
+    /               reduce using rule 59 (expr -> INTEGER .)
+    *               reduce using rule 59 (expr -> INTEGER .)
+    -               reduce using rule 59 (expr -> INTEGER .)
+    +               reduce using rule 59 (expr -> INTEGER .)
+    ,               reduce using rule 59 (expr -> INTEGER .)
+    ;               reduce using rule 59 (expr -> INTEGER .)
+    NEWLINE         reduce using rule 59 (expr -> INTEGER .)
+    )               reduce using rule 59 (expr -> INTEGER .)
+    TO              reduce using rule 59 (expr -> INTEGER .)
+    THEN            reduce using rule 59 (expr -> INTEGER .)
+    error           reduce using rule 59 (expr -> INTEGER .)
+    STEP            reduce using rule 59 (expr -> INTEGER .)
+
+
+state 44
+
+    (30) command -> IF STRING . relexpr THEN INTEGER
+    (96) relexpr -> STRING . GT STRING
+    (97) relexpr -> STRING . GE STRING
+    (98) relexpr -> STRING . NE STRING
+    (99) relexpr -> STRING . = STRING
+    (100) relexpr -> STRING . LE STRING
+    (101) relexpr -> STRING . LT STRING
+    (68) expr -> STRING . + variable
+    (69) expr -> STRING . + STRING
+    (96) relexpr -> . STRING GT STRING
+    (97) relexpr -> . STRING GE STRING
+    (98) relexpr -> . STRING NE STRING
+    (99) relexpr -> . STRING = STRING
+    (100) relexpr -> . STRING LE STRING
+    (101) relexpr -> . STRING LT STRING
+    (102) relexpr -> . expr GT expr
+    (103) relexpr -> . expr GE expr
+    (104) relexpr -> . expr NE expr
+    (105) relexpr -> . expr = expr
+    (106) relexpr -> . expr LE expr
+    (107) relexpr -> . expr LT expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    GT              shift and go to state 85
+    GE              shift and go to state 86
+    NE              shift and go to state 87
+    =               shift and go to state 88
+    LE              shift and go to state 89
+    LT              shift and go to state 90
+    +               shift and go to state 91
+    STRING          shift and go to state 83
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    ID              shift and go to state 51
+
+    relexpr                        shift and go to state 84
+    variable                       shift and go to state 46
+    expr                           shift and go to state 45
+
+state 45
+
+    (102) relexpr -> expr . GT expr
+    (103) relexpr -> expr . GE expr
+    (104) relexpr -> expr . NE expr
+    (105) relexpr -> expr . = expr
+    (106) relexpr -> expr . LE expr
+    (107) relexpr -> expr . LT expr
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              shift and go to state 92
+    GE              shift and go to state 93
+    NE              shift and go to state 94
+    =               shift and go to state 95
+    LE              shift and go to state 96
+    LT              shift and go to state 97
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 46
+
+    (51) expr -> variable .
+    (65) expr -> variable . + INTEGER
+    (66) expr -> variable . + variable
+    (67) expr -> variable . + STRING
+  ! shift/reduce conflict for + resolved as shift
+    GT              reduce using rule 51 (expr -> variable .)
+    GE              reduce using rule 51 (expr -> variable .)
+    NE              reduce using rule 51 (expr -> variable .)
+    =               reduce using rule 51 (expr -> variable .)
+    LE              reduce using rule 51 (expr -> variable .)
+    LT              reduce using rule 51 (expr -> variable .)
+    ^               reduce using rule 51 (expr -> variable .)
+    /               reduce using rule 51 (expr -> variable .)
+    *               reduce using rule 51 (expr -> variable .)
+    -               reduce using rule 51 (expr -> variable .)
+    ,               reduce using rule 51 (expr -> variable .)
+    ;               reduce using rule 51 (expr -> variable .)
+    NEWLINE         reduce using rule 51 (expr -> variable .)
+    )               reduce using rule 51 (expr -> variable .)
+    TO              reduce using rule 51 (expr -> variable .)
+    THEN            reduce using rule 51 (expr -> variable .)
+    error           reduce using rule 51 (expr -> variable .)
+    STEP            reduce using rule 51 (expr -> variable .)
+    +               shift and go to state 103
+
+
+state 47
+
+    (52) expr -> - . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 104
+    variable                       shift and go to state 46
+
+state 48
+
+    (53) expr -> ( . expr )
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 106
+    variable                       shift and go to state 46
+
+state 49
+
+    (54) expr -> BLTIN . ( STRING )
+    (55) expr -> BLTIN . ( _4_exprlist_optional )
+    (               shift and go to state 107
+
+
+state 50
+
+    (58) expr -> FLOAT .
+    GT              reduce using rule 58 (expr -> FLOAT .)
+    GE              reduce using rule 58 (expr -> FLOAT .)
+    NE              reduce using rule 58 (expr -> FLOAT .)
+    =               reduce using rule 58 (expr -> FLOAT .)
+    LE              reduce using rule 58 (expr -> FLOAT .)
+    LT              reduce using rule 58 (expr -> FLOAT .)
+    ^               reduce using rule 58 (expr -> FLOAT .)
+    /               reduce using rule 58 (expr -> FLOAT .)
+    *               reduce using rule 58 (expr -> FLOAT .)
+    -               reduce using rule 58 (expr -> FLOAT .)
+    +               reduce using rule 58 (expr -> FLOAT .)
+    ,               reduce using rule 58 (expr -> FLOAT .)
+    ;               reduce using rule 58 (expr -> FLOAT .)
+    NEWLINE         reduce using rule 58 (expr -> FLOAT .)
+    )               reduce using rule 58 (expr -> FLOAT .)
+    TO              reduce using rule 58 (expr -> FLOAT .)
+    THEN            reduce using rule 58 (expr -> FLOAT .)
+    error           reduce using rule 58 (expr -> FLOAT .)
+    STEP            reduce using rule 58 (expr -> FLOAT .)
+
+
+state 51
+
+    (108) variable -> ID . ( expr , expr )
+    (109) variable -> ID . ( expr )
+    (110) variable -> ID .
+    (               shift and go to state 108
+    +               reduce using rule 110 (variable -> ID .)
+    GT              reduce using rule 110 (variable -> ID .)
+    GE              reduce using rule 110 (variable -> ID .)
+    NE              reduce using rule 110 (variable -> ID .)
+    =               reduce using rule 110 (variable -> ID .)
+    LE              reduce using rule 110 (variable -> ID .)
+    LT              reduce using rule 110 (variable -> ID .)
+    ^               reduce using rule 110 (variable -> ID .)
+    /               reduce using rule 110 (variable -> ID .)
+    *               reduce using rule 110 (variable -> ID .)
+    -               reduce using rule 110 (variable -> ID .)
+    ,               reduce using rule 110 (variable -> ID .)
+    ;               reduce using rule 110 (variable -> ID .)
+    NEWLINE         reduce using rule 110 (variable -> ID .)
+    )               reduce using rule 110 (variable -> ID .)
+    TO              reduce using rule 110 (variable -> ID .)
+    THEN            reduce using rule 110 (variable -> ID .)
+    error           reduce using rule 110 (variable -> ID .)
+    STEP            reduce using rule 110 (variable -> ID .)
+
+
+state 52
+
+    (32) command -> GOTO error .
+    NEWLINE         reduce using rule 32 (command -> GOTO error .)
+
+
+state 53
+
+    (33) command -> GOTO INTEGER .
+    NEWLINE         reduce using rule 33 (command -> GOTO INTEGER .)
+
+
+state 54
+
+    (35) command -> PRINT error .
+    NEWLINE         reduce using rule 35 (command -> PRINT error .)
+
+
+state 55
+
+    (36) command -> PRINT plist . _2_optend_optional
+    (125) plist -> plist . , pitem
+    (37) _2_optend_optional -> . optend
+    (38) _2_optend_optional -> .
+    (82) optend -> . ;
+    (83) optend -> . ,
+    ,               shift and go to state 110
+    NEWLINE         reduce using rule 38 (_2_optend_optional -> .)
+    ;               shift and go to state 112
+
+    _2_optend_optional             shift and go to state 109
+    optend                         shift and go to state 111
+
+state 56
+
+    (124) plist -> pitem .
+    ,               reduce using rule 124 (plist -> pitem .)
+    ;               reduce using rule 124 (plist -> pitem .)
+    NEWLINE         reduce using rule 124 (plist -> pitem .)
+
+
+state 57
+
+    (121) pitem -> STRING . expr
+    (123) pitem -> STRING .
+    (68) expr -> STRING . + variable
+    (69) expr -> STRING . + STRING
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    ,               reduce using rule 123 (pitem -> STRING .)
+    ;               reduce using rule 123 (pitem -> STRING .)
+    NEWLINE         reduce using rule 123 (pitem -> STRING .)
+    +               shift and go to state 91
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 113
+    variable                       shift and go to state 46
+
+state 58
+
+    (122) pitem -> expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    ,               reduce using rule 122 (pitem -> expr .)
+    ;               reduce using rule 122 (pitem -> expr .)
+    NEWLINE         reduce using rule 122 (pitem -> expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 59
+
+    (39) command -> INPUT error .
+    NEWLINE         reduce using rule 39 (command -> INPUT error .)
+
+
+state 60
+
+    (40) command -> INPUT _3_STRING_0x2c_optional . varlist
+    (111) varlist -> . variable _8_0x2c_variable_repeat
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    ID              shift and go to state 51
+
+    varlist                        shift and go to state 114
+    variable                       shift and go to state 71
+
+state 61
+
+    (41) _3_STRING_0x2c_optional -> STRING . ,
+    ,               shift and go to state 115
+
+
+state 62
+
+    (43) command -> DATA error .
+    NEWLINE         reduce using rule 43 (command -> DATA error .)
+
+
+state 63
+
+    (44) command -> DATA datalist .
+    NEWLINE         reduce using rule 44 (command -> DATA datalist .)
+
+
+state 64
+
+    (70) datalist -> STRING . _5_0x2c_STRING_repeat
+    (71) _5_0x2c_STRING_repeat -> . _5_0x2c_STRING_items
+    (72) _5_0x2c_STRING_repeat -> .
+    (73) _5_0x2c_STRING_items -> . _5_0x2c_STRING_items _5_0x2c_STRING_item
+    (74) _5_0x2c_STRING_items -> . _5_0x2c_STRING_item
+    (75) _5_0x2c_STRING_item -> . , STRING
+    NEWLINE         reduce using rule 72 (_5_0x2c_STRING_repeat -> .)
+    ,               shift and go to state 119
+
+    _5_0x2c_STRING_repeat          shift and go to state 116
+    _5_0x2c_STRING_items           shift and go to state 117
+    _5_0x2c_STRING_item            shift and go to state 118
+
+state 65
+
+    (76) datalist -> number . _6_0x2c_number_repeat
+    (77) _6_0x2c_number_repeat -> . _6_0x2c_number_items
+    (78) _6_0x2c_number_repeat -> .
+    (79) _6_0x2c_number_items -> . _6_0x2c_number_items _6_0x2c_number_item
+    (80) _6_0x2c_number_items -> . _6_0x2c_number_item
+    (81) _6_0x2c_number_item -> . , number
+    NEWLINE         reduce using rule 78 (_6_0x2c_number_repeat -> .)
+    ,               shift and go to state 123
+
+    _6_0x2c_number_repeat          shift and go to state 120
+    _6_0x2c_number_items           shift and go to state 121
+    _6_0x2c_number_item            shift and go to state 122
+
+state 66
+
+    (117) number -> - . FLOAT
+    (118) number -> - . INTEGER
+    FLOAT           shift and go to state 124
+    INTEGER         shift and go to state 125
+
+
+state 67
+
+    (119) number -> FLOAT .
+    ,               reduce using rule 119 (number -> FLOAT .)
+    NEWLINE         reduce using rule 119 (number -> FLOAT .)
+
+
+state 68
+
+    (120) number -> INTEGER .
+    ,               reduce using rule 120 (number -> INTEGER .)
+    NEWLINE         reduce using rule 120 (number -> INTEGER .)
+
+
+state 69
+
+    (45) command -> READ error .
+    NEWLINE         reduce using rule 45 (command -> READ error .)
+
+
+state 70
+
+    (46) command -> READ varlist .
+    NEWLINE         reduce using rule 46 (command -> READ varlist .)
+
+
+state 71
+
+    (111) varlist -> variable . _8_0x2c_variable_repeat
+    (112) _8_0x2c_variable_repeat -> . _8_0x2c_variable_items
+    (113) _8_0x2c_variable_repeat -> .
+    (114) _8_0x2c_variable_items -> . _8_0x2c_variable_items _8_0x2c_variable_item
+    (115) _8_0x2c_variable_items -> . _8_0x2c_variable_item
+    (116) _8_0x2c_variable_item -> . , variable
+    NEWLINE         reduce using rule 113 (_8_0x2c_variable_repeat -> .)
+    ,               shift and go to state 129
+
+    _8_0x2c_variable_repeat        shift and go to state 126
+    _8_0x2c_variable_items         shift and go to state 127
+    _8_0x2c_variable_item          shift and go to state 128
+
+state 72
+
+    (47) command -> LET variable . = error
+    (48) command -> LET variable . = STRING
+    (49) command -> LET variable . = expr
+    =               shift and go to state 130
+
+
+state 73
+
+    (10) command -> ID ( INTEGER . ) = STRING
+    )               shift and go to state 131
+
+
+state 74
+
+    (86) dimlist -> dimitem _7_0x2c_dimitem_repeat .
+    NEWLINE         reduce using rule 86 (dimlist -> dimitem _7_0x2c_dimitem_repeat .)
+
+
+state 75
+
+    (87) _7_0x2c_dimitem_repeat -> _7_0x2c_dimitem_items .
+    (89) _7_0x2c_dimitem_items -> _7_0x2c_dimitem_items . _7_0x2c_dimitem_item
+    (91) _7_0x2c_dimitem_item -> . , dimitem
+    NEWLINE         reduce using rule 87 (_7_0x2c_dimitem_repeat -> _7_0x2c_dimitem_items .)
+    ,               shift and go to state 77
+
+    _7_0x2c_dimitem_item           shift and go to state 132
+
+state 76
+
+    (90) _7_0x2c_dimitem_items -> _7_0x2c_dimitem_item .
+    ,               reduce using rule 90 (_7_0x2c_dimitem_items -> _7_0x2c_dimitem_item .)
+    NEWLINE         reduce using rule 90 (_7_0x2c_dimitem_items -> _7_0x2c_dimitem_item .)
+
+
+state 77
+
+    (91) _7_0x2c_dimitem_item -> , . dimitem
+    (92) dimitem -> . ID ( INTEGER , INTEGER )
+    (93) dimitem -> . ID ( INTEGER )
+    ID              shift and go to state 34
+
+    dimitem                        shift and go to state 133
+
+state 78
+
+    (92) dimitem -> ID ( . INTEGER , INTEGER )
+    (93) dimitem -> ID ( . INTEGER )
+    INTEGER         shift and go to state 134
+
+
+state 79
+
+    (16) command -> DEF FN ( . error ) = expr
+    (17) command -> DEF FN ( . ID ) = error
+    (18) command -> DEF FN ( . ID ) = expr
+    error           shift and go to state 135
+    ID              shift and go to state 136
+
+
+state 80
+
+    (24) command -> FOR ID = . expr TO expr error
+    (25) command -> FOR ID = . expr TO error optstep
+    (26) command -> FOR ID = . error TO expr optstep
+    (27) command -> FOR ID = . expr TO expr optstep
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    error           shift and go to state 138
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 137
+    variable                       shift and go to state 46
+
+state 81
+
+    (28) command -> IF relexpr THEN . error
+    (31) command -> IF relexpr THEN . INTEGER
+    error           shift and go to state 139
+    INTEGER         shift and go to state 140
+
+
+state 82
+
+    (29) command -> IF error THEN . INTEGER
+    INTEGER         shift and go to state 141
+
+
+state 83
+
+    (96) relexpr -> STRING . GT STRING
+    (97) relexpr -> STRING . GE STRING
+    (98) relexpr -> STRING . NE STRING
+    (99) relexpr -> STRING . = STRING
+    (100) relexpr -> STRING . LE STRING
+    (101) relexpr -> STRING . LT STRING
+    (68) expr -> STRING . + variable
+    (69) expr -> STRING . + STRING
+    GT              shift and go to state 85
+    GE              shift and go to state 86
+    NE              shift and go to state 87
+    =               shift and go to state 88
+    LE              shift and go to state 89
+    LT              shift and go to state 90
+    +               shift and go to state 91
+
+
+state 84
+
+    (30) command -> IF STRING relexpr . THEN INTEGER
+    THEN            shift and go to state 142
+
+
+state 85
+
+    (96) relexpr -> STRING GT . STRING
+    STRING          shift and go to state 143
+
+
+state 86
+
+    (97) relexpr -> STRING GE . STRING
+    STRING          shift and go to state 144
+
+
+state 87
+
+    (98) relexpr -> STRING NE . STRING
+    STRING          shift and go to state 145
+
+
+state 88
+
+    (99) relexpr -> STRING = . STRING
+    STRING          shift and go to state 146
+
+
+state 89
+
+    (100) relexpr -> STRING LE . STRING
+    STRING          shift and go to state 147
+
+
+state 90
+
+    (101) relexpr -> STRING LT . STRING
+    STRING          shift and go to state 148
+
+
+state 91
+
+    (68) expr -> STRING + . variable
+    (69) expr -> STRING + . STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    STRING          shift and go to state 149
+    ID              shift and go to state 51
+
+    variable                       shift and go to state 150
+
+state 92
+
+    (102) relexpr -> expr GT . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 151
+    variable                       shift and go to state 46
+
+state 93
+
+    (103) relexpr -> expr GE . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 152
+    variable                       shift and go to state 46
+
+state 94
+
+    (104) relexpr -> expr NE . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 153
+    variable                       shift and go to state 46
+
+state 95
+
+    (105) relexpr -> expr = . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 154
+    variable                       shift and go to state 46
+
+state 96
+
+    (106) relexpr -> expr LE . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 155
+    variable                       shift and go to state 46
+
+state 97
+
+    (107) relexpr -> expr LT . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 156
+    variable                       shift and go to state 46
+
+state 98
+
+    (60) expr -> expr ^ . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 157
+    variable                       shift and go to state 46
+
+state 99
+
+    (61) expr -> expr / . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 158
+    variable                       shift and go to state 46
+
+state 100
+
+    (62) expr -> expr * . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 159
+    variable                       shift and go to state 46
+
+state 101
+
+    (63) expr -> expr - . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 160
+    variable                       shift and go to state 46
+
+state 102
+
+    (64) expr -> expr + . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 161
+    variable                       shift and go to state 46
+
+state 103
+
+    (65) expr -> variable + . INTEGER
+    (66) expr -> variable + . variable
+    (67) expr -> variable + . STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    INTEGER         shift and go to state 163
+    STRING          shift and go to state 164
+    ID              shift and go to state 51
+
+    variable                       shift and go to state 162
+
+state 104
+
+    (52) expr -> - expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              reduce using rule 52 (expr -> - expr .)
+    GE              reduce using rule 52 (expr -> - expr .)
+    NE              reduce using rule 52 (expr -> - expr .)
+    =               reduce using rule 52 (expr -> - expr .)
+    LE              reduce using rule 52 (expr -> - expr .)
+    LT              reduce using rule 52 (expr -> - expr .)
+    ^               reduce using rule 52 (expr -> - expr .)
+    /               reduce using rule 52 (expr -> - expr .)
+    *               reduce using rule 52 (expr -> - expr .)
+    -               reduce using rule 52 (expr -> - expr .)
+    +               reduce using rule 52 (expr -> - expr .)
+    ,               reduce using rule 52 (expr -> - expr .)
+    ;               reduce using rule 52 (expr -> - expr .)
+    NEWLINE         reduce using rule 52 (expr -> - expr .)
+    )               reduce using rule 52 (expr -> - expr .)
+    TO              reduce using rule 52 (expr -> - expr .)
+    THEN            reduce using rule 52 (expr -> - expr .)
+    error           reduce using rule 52 (expr -> - expr .)
+    STEP            reduce using rule 52 (expr -> - expr .)
+
+
+state 105
+
+    (68) expr -> STRING . + variable
+    (69) expr -> STRING . + STRING
+    +               shift and go to state 91
+
+
+state 106
+
+    (53) expr -> ( expr . )
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    )               shift and go to state 165
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 107
+
+    (54) expr -> BLTIN ( . STRING )
+    (55) expr -> BLTIN ( . _4_exprlist_optional )
+    (56) _4_exprlist_optional -> . exprlist
+    (57) _4_exprlist_optional -> .
+    (94) exprlist -> . exprlist , expr
+    (95) exprlist -> . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    STRING          shift and go to state 166
+    )               reduce using rule 57 (_4_exprlist_optional -> .)
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    ID              shift and go to state 51
+
+    _4_exprlist_optional           shift and go to state 167
+    exprlist                       shift and go to state 168
+    expr                           shift and go to state 169
+    variable                       shift and go to state 46
+
+state 108
+
+    (108) variable -> ID ( . expr , expr )
+    (109) variable -> ID ( . expr )
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 170
+    variable                       shift and go to state 46
+
+state 109
+
+    (36) command -> PRINT plist _2_optend_optional .
+    NEWLINE         reduce using rule 36 (command -> PRINT plist _2_optend_optional .)
+
+
+state 110
+
+    (125) plist -> plist , . pitem
+    (83) optend -> , .
+    (121) pitem -> . STRING expr
+    (122) pitem -> . expr
+    (123) pitem -> . STRING
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    NEWLINE         reduce using rule 83 (optend -> , .)
+    STRING          shift and go to state 57
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    ID              shift and go to state 51
+
+    pitem                          shift and go to state 171
+    expr                           shift and go to state 58
+    variable                       shift and go to state 46
+
+state 111
+
+    (37) _2_optend_optional -> optend .
+    NEWLINE         reduce using rule 37 (_2_optend_optional -> optend .)
+
+
+state 112
+
+    (82) optend -> ; .
+    NEWLINE         reduce using rule 82 (optend -> ; .)
+
+
+state 113
+
+    (121) pitem -> STRING expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    ,               reduce using rule 121 (pitem -> STRING expr .)
+    ;               reduce using rule 121 (pitem -> STRING expr .)
+    NEWLINE         reduce using rule 121 (pitem -> STRING expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 114
+
+    (40) command -> INPUT _3_STRING_0x2c_optional varlist .
+    NEWLINE         reduce using rule 40 (command -> INPUT _3_STRING_0x2c_optional varlist .)
+
+
+state 115
+
+    (41) _3_STRING_0x2c_optional -> STRING , .
+    ID              reduce using rule 41 (_3_STRING_0x2c_optional -> STRING , .)
+
+
+state 116
+
+    (70) datalist -> STRING _5_0x2c_STRING_repeat .
+    NEWLINE         reduce using rule 70 (datalist -> STRING _5_0x2c_STRING_repeat .)
+
+
+state 117
+
+    (71) _5_0x2c_STRING_repeat -> _5_0x2c_STRING_items .
+    (73) _5_0x2c_STRING_items -> _5_0x2c_STRING_items . _5_0x2c_STRING_item
+    (75) _5_0x2c_STRING_item -> . , STRING
+    NEWLINE         reduce using rule 71 (_5_0x2c_STRING_repeat -> _5_0x2c_STRING_items .)
+    ,               shift and go to state 119
+
+    _5_0x2c_STRING_item            shift and go to state 172
+
+state 118
+
+    (74) _5_0x2c_STRING_items -> _5_0x2c_STRING_item .
+    ,               reduce using rule 74 (_5_0x2c_STRING_items -> _5_0x2c_STRING_item .)
+    NEWLINE         reduce using rule 74 (_5_0x2c_STRING_items -> _5_0x2c_STRING_item .)
+
+
+state 119
+
+    (75) _5_0x2c_STRING_item -> , . STRING
+    STRING          shift and go to state 173
+
+
+state 120
+
+    (76) datalist -> number _6_0x2c_number_repeat .
+    NEWLINE         reduce using rule 76 (datalist -> number _6_0x2c_number_repeat .)
+
+
+state 121
+
+    (77) _6_0x2c_number_repeat -> _6_0x2c_number_items .
+    (79) _6_0x2c_number_items -> _6_0x2c_number_items . _6_0x2c_number_item
+    (81) _6_0x2c_number_item -> . , number
+    NEWLINE         reduce using rule 77 (_6_0x2c_number_repeat -> _6_0x2c_number_items .)
+    ,               shift and go to state 123
+
+    _6_0x2c_number_item            shift and go to state 174
+
+state 122
+
+    (80) _6_0x2c_number_items -> _6_0x2c_number_item .
+    ,               reduce using rule 80 (_6_0x2c_number_items -> _6_0x2c_number_item .)
+    NEWLINE         reduce using rule 80 (_6_0x2c_number_items -> _6_0x2c_number_item .)
+
+
+state 123
+
+    (81) _6_0x2c_number_item -> , . number
+    (117) number -> . - FLOAT
+    (118) number -> . - INTEGER
+    (119) number -> . FLOAT
+    (120) number -> . INTEGER
+    -               shift and go to state 66
+    FLOAT           shift and go to state 67
+    INTEGER         shift and go to state 68
+
+    number                         shift and go to state 175
+
+state 124
+
+    (117) number -> - FLOAT .
+    ,               reduce using rule 117 (number -> - FLOAT .)
+    NEWLINE         reduce using rule 117 (number -> - FLOAT .)
+
+
+state 125
+
+    (118) number -> - INTEGER .
+    ,               reduce using rule 118 (number -> - INTEGER .)
+    NEWLINE         reduce using rule 118 (number -> - INTEGER .)
+
+
+state 126
+
+    (111) varlist -> variable _8_0x2c_variable_repeat .
+    NEWLINE         reduce using rule 111 (varlist -> variable _8_0x2c_variable_repeat .)
+
+
+state 127
+
+    (112) _8_0x2c_variable_repeat -> _8_0x2c_variable_items .
+    (114) _8_0x2c_variable_items -> _8_0x2c_variable_items . _8_0x2c_variable_item
+    (116) _8_0x2c_variable_item -> . , variable
+    NEWLINE         reduce using rule 112 (_8_0x2c_variable_repeat -> _8_0x2c_variable_items .)
+    ,               shift and go to state 129
+
+    _8_0x2c_variable_item          shift and go to state 176
+
+state 128
+
+    (115) _8_0x2c_variable_items -> _8_0x2c_variable_item .
+    ,               reduce using rule 115 (_8_0x2c_variable_items -> _8_0x2c_variable_item .)
+    NEWLINE         reduce using rule 115 (_8_0x2c_variable_items -> _8_0x2c_variable_item .)
+
+
+state 129
+
+    (116) _8_0x2c_variable_item -> , . variable
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    ID              shift and go to state 51
+
+    variable                       shift and go to state 177
+
+state 130
+
+    (47) command -> LET variable = . error
+    (48) command -> LET variable = . STRING
+    (49) command -> LET variable = . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    error           shift and go to state 178
+    STRING          shift and go to state 179
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    ID              shift and go to state 51
+
+    variable                       shift and go to state 46
+    expr                           shift and go to state 180
+
+state 131
+
+    (10) command -> ID ( INTEGER ) . = STRING
+    =               shift and go to state 181
+
+
+state 132
+
+    (89) _7_0x2c_dimitem_items -> _7_0x2c_dimitem_items _7_0x2c_dimitem_item .
+    ,               reduce using rule 89 (_7_0x2c_dimitem_items -> _7_0x2c_dimitem_items _7_0x2c_dimitem_item .)
+    NEWLINE         reduce using rule 89 (_7_0x2c_dimitem_items -> _7_0x2c_dimitem_items _7_0x2c_dimitem_item .)
+
+
+state 133
+
+    (91) _7_0x2c_dimitem_item -> , dimitem .
+    ,               reduce using rule 91 (_7_0x2c_dimitem_item -> , dimitem .)
+    NEWLINE         reduce using rule 91 (_7_0x2c_dimitem_item -> , dimitem .)
+
+
+state 134
+
+    (92) dimitem -> ID ( INTEGER . , INTEGER )
+    (93) dimitem -> ID ( INTEGER . )
+    ,               shift and go to state 182
+    )               shift and go to state 183
+
+
+state 135
+
+    (16) command -> DEF FN ( error . ) = expr
+    )               shift and go to state 184
+
+
+state 136
+
+    (17) command -> DEF FN ( ID . ) = error
+    (18) command -> DEF FN ( ID . ) = expr
+    )               shift and go to state 185
+
+
+state 137
+
+    (24) command -> FOR ID = expr . TO expr error
+    (25) command -> FOR ID = expr . TO error optstep
+    (27) command -> FOR ID = expr . TO expr optstep
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    TO              shift and go to state 186
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 138
+
+    (26) command -> FOR ID = error . TO expr optstep
+    TO              shift and go to state 187
+
+
+state 139
+
+    (28) command -> IF relexpr THEN error .
+    NEWLINE         reduce using rule 28 (command -> IF relexpr THEN error .)
+
+
+state 140
+
+    (31) command -> IF relexpr THEN INTEGER .
+    NEWLINE         reduce using rule 31 (command -> IF relexpr THEN INTEGER .)
+
+
+state 141
+
+    (29) command -> IF error THEN INTEGER .
+    NEWLINE         reduce using rule 29 (command -> IF error THEN INTEGER .)
+
+
+state 142
+
+    (30) command -> IF STRING relexpr THEN . INTEGER
+    INTEGER         shift and go to state 188
+
+
+state 143
+
+    (96) relexpr -> STRING GT STRING .
+    THEN            reduce using rule 96 (relexpr -> STRING GT STRING .)
+
+
+state 144
+
+    (97) relexpr -> STRING GE STRING .
+    THEN            reduce using rule 97 (relexpr -> STRING GE STRING .)
+
+
+state 145
+
+    (98) relexpr -> STRING NE STRING .
+    THEN            reduce using rule 98 (relexpr -> STRING NE STRING .)
+
+
+state 146
+
+    (99) relexpr -> STRING = STRING .
+    THEN            reduce using rule 99 (relexpr -> STRING = STRING .)
+
+
+state 147
+
+    (100) relexpr -> STRING LE STRING .
+    THEN            reduce using rule 100 (relexpr -> STRING LE STRING .)
+
+
+state 148
+
+    (101) relexpr -> STRING LT STRING .
+    THEN            reduce using rule 101 (relexpr -> STRING LT STRING .)
+
+
+state 149
+
+    (69) expr -> STRING + STRING .
+    GT              reduce using rule 69 (expr -> STRING + STRING .)
+    GE              reduce using rule 69 (expr -> STRING + STRING .)
+    NE              reduce using rule 69 (expr -> STRING + STRING .)
+    =               reduce using rule 69 (expr -> STRING + STRING .)
+    LE              reduce using rule 69 (expr -> STRING + STRING .)
+    LT              reduce using rule 69 (expr -> STRING + STRING .)
+    ^               reduce using rule 69 (expr -> STRING + STRING .)
+    /               reduce using rule 69 (expr -> STRING + STRING .)
+    *               reduce using rule 69 (expr -> STRING + STRING .)
+    -               reduce using rule 69 (expr -> STRING + STRING .)
+    +               reduce using rule 69 (expr -> STRING + STRING .)
+    ,               reduce using rule 69 (expr -> STRING + STRING .)
+    ;               reduce using rule 69 (expr -> STRING + STRING .)
+    NEWLINE         reduce using rule 69 (expr -> STRING + STRING .)
+    )               reduce using rule 69 (expr -> STRING + STRING .)
+    TO              reduce using rule 69 (expr -> STRING + STRING .)
+    THEN            reduce using rule 69 (expr -> STRING + STRING .)
+    error           reduce using rule 69 (expr -> STRING + STRING .)
+    STEP            reduce using rule 69 (expr -> STRING + STRING .)
+
+
+state 150
+
+    (68) expr -> STRING + variable .
+    GT              reduce using rule 68 (expr -> STRING + variable .)
+    GE              reduce using rule 68 (expr -> STRING + variable .)
+    NE              reduce using rule 68 (expr -> STRING + variable .)
+    =               reduce using rule 68 (expr -> STRING + variable .)
+    LE              reduce using rule 68 (expr -> STRING + variable .)
+    LT              reduce using rule 68 (expr -> STRING + variable .)
+    ^               reduce using rule 68 (expr -> STRING + variable .)
+    /               reduce using rule 68 (expr -> STRING + variable .)
+    *               reduce using rule 68 (expr -> STRING + variable .)
+    -               reduce using rule 68 (expr -> STRING + variable .)
+    +               reduce using rule 68 (expr -> STRING + variable .)
+    ,               reduce using rule 68 (expr -> STRING + variable .)
+    ;               reduce using rule 68 (expr -> STRING + variable .)
+    NEWLINE         reduce using rule 68 (expr -> STRING + variable .)
+    )               reduce using rule 68 (expr -> STRING + variable .)
+    TO              reduce using rule 68 (expr -> STRING + variable .)
+    THEN            reduce using rule 68 (expr -> STRING + variable .)
+    error           reduce using rule 68 (expr -> STRING + variable .)
+    STEP            reduce using rule 68 (expr -> STRING + variable .)
+
+
+state 151
+
+    (102) relexpr -> expr GT expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    THEN            reduce using rule 102 (relexpr -> expr GT expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 152
+
+    (103) relexpr -> expr GE expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    THEN            reduce using rule 103 (relexpr -> expr GE expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 153
+
+    (104) relexpr -> expr NE expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    THEN            reduce using rule 104 (relexpr -> expr NE expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 154
+
+    (105) relexpr -> expr = expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    THEN            reduce using rule 105 (relexpr -> expr = expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 155
+
+    (106) relexpr -> expr LE expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    THEN            reduce using rule 106 (relexpr -> expr LE expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 156
+
+    (107) relexpr -> expr LT expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    THEN            reduce using rule 107 (relexpr -> expr LT expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 157
+
+    (60) expr -> expr ^ expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              reduce using rule 60 (expr -> expr ^ expr .)
+    GE              reduce using rule 60 (expr -> expr ^ expr .)
+    NE              reduce using rule 60 (expr -> expr ^ expr .)
+    =               reduce using rule 60 (expr -> expr ^ expr .)
+    LE              reduce using rule 60 (expr -> expr ^ expr .)
+    LT              reduce using rule 60 (expr -> expr ^ expr .)
+    ^               reduce using rule 60 (expr -> expr ^ expr .)
+    /               reduce using rule 60 (expr -> expr ^ expr .)
+    *               reduce using rule 60 (expr -> expr ^ expr .)
+    -               reduce using rule 60 (expr -> expr ^ expr .)
+    +               reduce using rule 60 (expr -> expr ^ expr .)
+    ,               reduce using rule 60 (expr -> expr ^ expr .)
+    ;               reduce using rule 60 (expr -> expr ^ expr .)
+    NEWLINE         reduce using rule 60 (expr -> expr ^ expr .)
+    )               reduce using rule 60 (expr -> expr ^ expr .)
+    TO              reduce using rule 60 (expr -> expr ^ expr .)
+    THEN            reduce using rule 60 (expr -> expr ^ expr .)
+    error           reduce using rule 60 (expr -> expr ^ expr .)
+    STEP            reduce using rule 60 (expr -> expr ^ expr .)
+
+
+state 158
+
+    (61) expr -> expr / expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              reduce using rule 61 (expr -> expr / expr .)
+    GE              reduce using rule 61 (expr -> expr / expr .)
+    NE              reduce using rule 61 (expr -> expr / expr .)
+    =               reduce using rule 61 (expr -> expr / expr .)
+    LE              reduce using rule 61 (expr -> expr / expr .)
+    LT              reduce using rule 61 (expr -> expr / expr .)
+    /               reduce using rule 61 (expr -> expr / expr .)
+    *               reduce using rule 61 (expr -> expr / expr .)
+    -               reduce using rule 61 (expr -> expr / expr .)
+    +               reduce using rule 61 (expr -> expr / expr .)
+    ,               reduce using rule 61 (expr -> expr / expr .)
+    ;               reduce using rule 61 (expr -> expr / expr .)
+    NEWLINE         reduce using rule 61 (expr -> expr / expr .)
+    )               reduce using rule 61 (expr -> expr / expr .)
+    TO              reduce using rule 61 (expr -> expr / expr .)
+    THEN            reduce using rule 61 (expr -> expr / expr .)
+    error           reduce using rule 61 (expr -> expr / expr .)
+    STEP            reduce using rule 61 (expr -> expr / expr .)
+    ^               shift and go to state 98
+
+
+state 159
+
+    (62) expr -> expr * expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              reduce using rule 62 (expr -> expr * expr .)
+    GE              reduce using rule 62 (expr -> expr * expr .)
+    NE              reduce using rule 62 (expr -> expr * expr .)
+    =               reduce using rule 62 (expr -> expr * expr .)
+    LE              reduce using rule 62 (expr -> expr * expr .)
+    LT              reduce using rule 62 (expr -> expr * expr .)
+    /               reduce using rule 62 (expr -> expr * expr .)
+    *               reduce using rule 62 (expr -> expr * expr .)
+    -               reduce using rule 62 (expr -> expr * expr .)
+    +               reduce using rule 62 (expr -> expr * expr .)
+    ,               reduce using rule 62 (expr -> expr * expr .)
+    ;               reduce using rule 62 (expr -> expr * expr .)
+    NEWLINE         reduce using rule 62 (expr -> expr * expr .)
+    )               reduce using rule 62 (expr -> expr * expr .)
+    TO              reduce using rule 62 (expr -> expr * expr .)
+    THEN            reduce using rule 62 (expr -> expr * expr .)
+    error           reduce using rule 62 (expr -> expr * expr .)
+    STEP            reduce using rule 62 (expr -> expr * expr .)
+    ^               shift and go to state 98
+
+
+state 160
+
+    (63) expr -> expr - expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              reduce using rule 63 (expr -> expr - expr .)
+    GE              reduce using rule 63 (expr -> expr - expr .)
+    NE              reduce using rule 63 (expr -> expr - expr .)
+    =               reduce using rule 63 (expr -> expr - expr .)
+    LE              reduce using rule 63 (expr -> expr - expr .)
+    LT              reduce using rule 63 (expr -> expr - expr .)
+    -               reduce using rule 63 (expr -> expr - expr .)
+    +               reduce using rule 63 (expr -> expr - expr .)
+    ,               reduce using rule 63 (expr -> expr - expr .)
+    ;               reduce using rule 63 (expr -> expr - expr .)
+    NEWLINE         reduce using rule 63 (expr -> expr - expr .)
+    )               reduce using rule 63 (expr -> expr - expr .)
+    TO              reduce using rule 63 (expr -> expr - expr .)
+    THEN            reduce using rule 63 (expr -> expr - expr .)
+    error           reduce using rule 63 (expr -> expr - expr .)
+    STEP            reduce using rule 63 (expr -> expr - expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+
+
+state 161
+
+    (64) expr -> expr + expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    GT              reduce using rule 64 (expr -> expr + expr .)
+    GE              reduce using rule 64 (expr -> expr + expr .)
+    NE              reduce using rule 64 (expr -> expr + expr .)
+    =               reduce using rule 64 (expr -> expr + expr .)
+    LE              reduce using rule 64 (expr -> expr + expr .)
+    LT              reduce using rule 64 (expr -> expr + expr .)
+    -               reduce using rule 64 (expr -> expr + expr .)
+    +               reduce using rule 64 (expr -> expr + expr .)
+    ,               reduce using rule 64 (expr -> expr + expr .)
+    ;               reduce using rule 64 (expr -> expr + expr .)
+    NEWLINE         reduce using rule 64 (expr -> expr + expr .)
+    )               reduce using rule 64 (expr -> expr + expr .)
+    TO              reduce using rule 64 (expr -> expr + expr .)
+    THEN            reduce using rule 64 (expr -> expr + expr .)
+    error           reduce using rule 64 (expr -> expr + expr .)
+    STEP            reduce using rule 64 (expr -> expr + expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+
+
+state 162
+
+    (66) expr -> variable + variable .
+    GT              reduce using rule 66 (expr -> variable + variable .)
+    GE              reduce using rule 66 (expr -> variable + variable .)
+    NE              reduce using rule 66 (expr -> variable + variable .)
+    =               reduce using rule 66 (expr -> variable + variable .)
+    LE              reduce using rule 66 (expr -> variable + variable .)
+    LT              reduce using rule 66 (expr -> variable + variable .)
+    ^               reduce using rule 66 (expr -> variable + variable .)
+    /               reduce using rule 66 (expr -> variable + variable .)
+    *               reduce using rule 66 (expr -> variable + variable .)
+    -               reduce using rule 66 (expr -> variable + variable .)
+    +               reduce using rule 66 (expr -> variable + variable .)
+    ,               reduce using rule 66 (expr -> variable + variable .)
+    ;               reduce using rule 66 (expr -> variable + variable .)
+    NEWLINE         reduce using rule 66 (expr -> variable + variable .)
+    )               reduce using rule 66 (expr -> variable + variable .)
+    TO              reduce using rule 66 (expr -> variable + variable .)
+    THEN            reduce using rule 66 (expr -> variable + variable .)
+    error           reduce using rule 66 (expr -> variable + variable .)
+    STEP            reduce using rule 66 (expr -> variable + variable .)
+
+
+state 163
+
+    (65) expr -> variable + INTEGER .
+    GT              reduce using rule 65 (expr -> variable + INTEGER .)
+    GE              reduce using rule 65 (expr -> variable + INTEGER .)
+    NE              reduce using rule 65 (expr -> variable + INTEGER .)
+    =               reduce using rule 65 (expr -> variable + INTEGER .)
+    LE              reduce using rule 65 (expr -> variable + INTEGER .)
+    LT              reduce using rule 65 (expr -> variable + INTEGER .)
+    ^               reduce using rule 65 (expr -> variable + INTEGER .)
+    /               reduce using rule 65 (expr -> variable + INTEGER .)
+    *               reduce using rule 65 (expr -> variable + INTEGER .)
+    -               reduce using rule 65 (expr -> variable + INTEGER .)
+    +               reduce using rule 65 (expr -> variable + INTEGER .)
+    ,               reduce using rule 65 (expr -> variable + INTEGER .)
+    ;               reduce using rule 65 (expr -> variable + INTEGER .)
+    NEWLINE         reduce using rule 65 (expr -> variable + INTEGER .)
+    )               reduce using rule 65 (expr -> variable + INTEGER .)
+    TO              reduce using rule 65 (expr -> variable + INTEGER .)
+    THEN            reduce using rule 65 (expr -> variable + INTEGER .)
+    error           reduce using rule 65 (expr -> variable + INTEGER .)
+    STEP            reduce using rule 65 (expr -> variable + INTEGER .)
+
+
+state 164
+
+    (67) expr -> variable + STRING .
+    GT              reduce using rule 67 (expr -> variable + STRING .)
+    GE              reduce using rule 67 (expr -> variable + STRING .)
+    NE              reduce using rule 67 (expr -> variable + STRING .)
+    =               reduce using rule 67 (expr -> variable + STRING .)
+    LE              reduce using rule 67 (expr -> variable + STRING .)
+    LT              reduce using rule 67 (expr -> variable + STRING .)
+    ^               reduce using rule 67 (expr -> variable + STRING .)
+    /               reduce using rule 67 (expr -> variable + STRING .)
+    *               reduce using rule 67 (expr -> variable + STRING .)
+    -               reduce using rule 67 (expr -> variable + STRING .)
+    +               reduce using rule 67 (expr -> variable + STRING .)
+    ,               reduce using rule 67 (expr -> variable + STRING .)
+    ;               reduce using rule 67 (expr -> variable + STRING .)
+    NEWLINE         reduce using rule 67 (expr -> variable + STRING .)
+    )               reduce using rule 67 (expr -> variable + STRING .)
+    TO              reduce using rule 67 (expr -> variable + STRING .)
+    THEN            reduce using rule 67 (expr -> variable + STRING .)
+    error           reduce using rule 67 (expr -> variable + STRING .)
+    STEP            reduce using rule 67 (expr -> variable + STRING .)
+
+
+state 165
+
+    (53) expr -> ( expr ) .
+    GT              reduce using rule 53 (expr -> ( expr ) .)
+    GE              reduce using rule 53 (expr -> ( expr ) .)
+    NE              reduce using rule 53 (expr -> ( expr ) .)
+    =               reduce using rule 53 (expr -> ( expr ) .)
+    LE              reduce using rule 53 (expr -> ( expr ) .)
+    LT              reduce using rule 53 (expr -> ( expr ) .)
+    ^               reduce using rule 53 (expr -> ( expr ) .)
+    /               reduce using rule 53 (expr -> ( expr ) .)
+    *               reduce using rule 53 (expr -> ( expr ) .)
+    -               reduce using rule 53 (expr -> ( expr ) .)
+    +               reduce using rule 53 (expr -> ( expr ) .)
+    ,               reduce using rule 53 (expr -> ( expr ) .)
+    ;               reduce using rule 53 (expr -> ( expr ) .)
+    NEWLINE         reduce using rule 53 (expr -> ( expr ) .)
+    )               reduce using rule 53 (expr -> ( expr ) .)
+    TO              reduce using rule 53 (expr -> ( expr ) .)
+    THEN            reduce using rule 53 (expr -> ( expr ) .)
+    error           reduce using rule 53 (expr -> ( expr ) .)
+    STEP            reduce using rule 53 (expr -> ( expr ) .)
+
+
+state 166
+
+    (54) expr -> BLTIN ( STRING . )
+    (68) expr -> STRING . + variable
+    (69) expr -> STRING . + STRING
+    )               shift and go to state 189
+    +               shift and go to state 91
+
+
+state 167
+
+    (55) expr -> BLTIN ( _4_exprlist_optional . )
+    )               shift and go to state 190
+
+
+state 168
+
+    (56) _4_exprlist_optional -> exprlist .
+    (94) exprlist -> exprlist . , expr
+    )               reduce using rule 56 (_4_exprlist_optional -> exprlist .)
+    ,               shift and go to state 191
+
+
+state 169
+
+    (95) exprlist -> expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    ,               reduce using rule 95 (exprlist -> expr .)
+    )               reduce using rule 95 (exprlist -> expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 170
+
+    (108) variable -> ID ( expr . , expr )
+    (109) variable -> ID ( expr . )
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    ,               shift and go to state 192
+    )               shift and go to state 193
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 171
+
+    (125) plist -> plist , pitem .
+    ,               reduce using rule 125 (plist -> plist , pitem .)
+    ;               reduce using rule 125 (plist -> plist , pitem .)
+    NEWLINE         reduce using rule 125 (plist -> plist , pitem .)
+
+
+state 172
+
+    (73) _5_0x2c_STRING_items -> _5_0x2c_STRING_items _5_0x2c_STRING_item .
+    ,               reduce using rule 73 (_5_0x2c_STRING_items -> _5_0x2c_STRING_items _5_0x2c_STRING_item .)
+    NEWLINE         reduce using rule 73 (_5_0x2c_STRING_items -> _5_0x2c_STRING_items _5_0x2c_STRING_item .)
+
+
+state 173
+
+    (75) _5_0x2c_STRING_item -> , STRING .
+    ,               reduce using rule 75 (_5_0x2c_STRING_item -> , STRING .)
+    NEWLINE         reduce using rule 75 (_5_0x2c_STRING_item -> , STRING .)
+
+
+state 174
+
+    (79) _6_0x2c_number_items -> _6_0x2c_number_items _6_0x2c_number_item .
+    ,               reduce using rule 79 (_6_0x2c_number_items -> _6_0x2c_number_items _6_0x2c_number_item .)
+    NEWLINE         reduce using rule 79 (_6_0x2c_number_items -> _6_0x2c_number_items _6_0x2c_number_item .)
+
+
+state 175
+
+    (81) _6_0x2c_number_item -> , number .
+    ,               reduce using rule 81 (_6_0x2c_number_item -> , number .)
+    NEWLINE         reduce using rule 81 (_6_0x2c_number_item -> , number .)
+
+
+state 176
+
+    (114) _8_0x2c_variable_items -> _8_0x2c_variable_items _8_0x2c_variable_item .
+    ,               reduce using rule 114 (_8_0x2c_variable_items -> _8_0x2c_variable_items _8_0x2c_variable_item .)
+    NEWLINE         reduce using rule 114 (_8_0x2c_variable_items -> _8_0x2c_variable_items _8_0x2c_variable_item .)
+
+
+state 177
+
+    (116) _8_0x2c_variable_item -> , variable .
+    ,               reduce using rule 116 (_8_0x2c_variable_item -> , variable .)
+    NEWLINE         reduce using rule 116 (_8_0x2c_variable_item -> , variable .)
+
+
+state 178
+
+    (47) command -> LET variable = error .
+    NEWLINE         reduce using rule 47 (command -> LET variable = error .)
+
+
+state 179
+
+    (48) command -> LET variable = STRING .
+    (68) expr -> STRING . + variable
+    (69) expr -> STRING . + STRING
+    NEWLINE         reduce using rule 48 (command -> LET variable = STRING .)
+    +               shift and go to state 91
+
+
+state 180
+
+    (49) command -> LET variable = expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    NEWLINE         reduce using rule 49 (command -> LET variable = expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 181
+
+    (10) command -> ID ( INTEGER ) = . STRING
+    STRING          shift and go to state 194
+
+
+state 182
+
+    (92) dimitem -> ID ( INTEGER , . INTEGER )
+    INTEGER         shift and go to state 195
+
+
+state 183
+
+    (93) dimitem -> ID ( INTEGER ) .
+    ,               reduce using rule 93 (dimitem -> ID ( INTEGER ) .)
+    NEWLINE         reduce using rule 93 (dimitem -> ID ( INTEGER ) .)
+
+
+state 184
+
+    (16) command -> DEF FN ( error ) . = expr
+    =               shift and go to state 196
+
+
+state 185
+
+    (17) command -> DEF FN ( ID ) . = error
+    (18) command -> DEF FN ( ID ) . = expr
+    =               shift and go to state 197
+
+
+state 186
+
+    (24) command -> FOR ID = expr TO . expr error
+    (25) command -> FOR ID = expr TO . error optstep
+    (27) command -> FOR ID = expr TO . expr optstep
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    error           shift and go to state 199
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 198
+    variable                       shift and go to state 46
+
+state 187
+
+    (26) command -> FOR ID = error TO . expr optstep
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 200
+    variable                       shift and go to state 46
+
+state 188
+
+    (30) command -> IF STRING relexpr THEN INTEGER .
+    NEWLINE         reduce using rule 30 (command -> IF STRING relexpr THEN INTEGER .)
+
+
+state 189
+
+    (54) expr -> BLTIN ( STRING ) .
+    GT              reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    GE              reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    NE              reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    =               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    LE              reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    LT              reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    ^               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    /               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    *               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    -               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    +               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    ,               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    ;               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    NEWLINE         reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    )               reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    TO              reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    THEN            reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    error           reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+    STEP            reduce using rule 54 (expr -> BLTIN ( STRING ) .)
+
+
+state 190
+
+    (55) expr -> BLTIN ( _4_exprlist_optional ) .
+    GT              reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    GE              reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    NE              reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    =               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    LE              reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    LT              reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    ^               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    /               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    *               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    -               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    +               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    ,               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    ;               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    NEWLINE         reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    )               reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    TO              reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    THEN            reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    error           reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+    STEP            reduce using rule 55 (expr -> BLTIN ( _4_exprlist_optional ) .)
+
+
+state 191
+
+    (94) exprlist -> exprlist , . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 201
+    variable                       shift and go to state 46
+
+state 192
+
+    (108) variable -> ID ( expr , . expr )
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 202
+    variable                       shift and go to state 46
+
+state 193
+
+    (109) variable -> ID ( expr ) .
+    +               reduce using rule 109 (variable -> ID ( expr ) .)
+    GT              reduce using rule 109 (variable -> ID ( expr ) .)
+    GE              reduce using rule 109 (variable -> ID ( expr ) .)
+    NE              reduce using rule 109 (variable -> ID ( expr ) .)
+    =               reduce using rule 109 (variable -> ID ( expr ) .)
+    LE              reduce using rule 109 (variable -> ID ( expr ) .)
+    LT              reduce using rule 109 (variable -> ID ( expr ) .)
+    ^               reduce using rule 109 (variable -> ID ( expr ) .)
+    /               reduce using rule 109 (variable -> ID ( expr ) .)
+    *               reduce using rule 109 (variable -> ID ( expr ) .)
+    -               reduce using rule 109 (variable -> ID ( expr ) .)
+    ,               reduce using rule 109 (variable -> ID ( expr ) .)
+    ;               reduce using rule 109 (variable -> ID ( expr ) .)
+    NEWLINE         reduce using rule 109 (variable -> ID ( expr ) .)
+    )               reduce using rule 109 (variable -> ID ( expr ) .)
+    TO              reduce using rule 109 (variable -> ID ( expr ) .)
+    THEN            reduce using rule 109 (variable -> ID ( expr ) .)
+    error           reduce using rule 109 (variable -> ID ( expr ) .)
+    STEP            reduce using rule 109 (variable -> ID ( expr ) .)
+
+
+state 194
+
+    (10) command -> ID ( INTEGER ) = STRING .
+    NEWLINE         reduce using rule 10 (command -> ID ( INTEGER ) = STRING .)
+
+
+state 195
+
+    (92) dimitem -> ID ( INTEGER , INTEGER . )
+    )               shift and go to state 203
+
+
+state 196
+
+    (16) command -> DEF FN ( error ) = . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 204
+    variable                       shift and go to state 46
+
+state 197
+
+    (17) command -> DEF FN ( ID ) = . error
+    (18) command -> DEF FN ( ID ) = . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    error           shift and go to state 205
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 206
+    variable                       shift and go to state 46
+
+state 198
+
+    (24) command -> FOR ID = expr TO expr . error
+    (27) command -> FOR ID = expr TO expr . optstep
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    (84) optstep -> . empty
+    (85) optstep -> . STEP expr
+    (126) empty -> .
+    error           shift and go to state 207
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+    STEP            shift and go to state 210
+    NEWLINE         reduce using rule 126 (empty -> .)
+
+    optstep                        shift and go to state 208
+    empty                          shift and go to state 209
+
+state 199
+
+    (25) command -> FOR ID = expr TO error . optstep
+    (84) optstep -> . empty
+    (85) optstep -> . STEP expr
+    (126) empty -> .
+    STEP            shift and go to state 210
+    NEWLINE         reduce using rule 126 (empty -> .)
+
+    optstep                        shift and go to state 211
+    empty                          shift and go to state 209
+
+state 200
+
+    (26) command -> FOR ID = error TO expr . optstep
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    (84) optstep -> . empty
+    (85) optstep -> . STEP expr
+    (126) empty -> .
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+    STEP            shift and go to state 210
+    NEWLINE         reduce using rule 126 (empty -> .)
+
+    optstep                        shift and go to state 212
+    empty                          shift and go to state 209
+
+state 201
+
+    (94) exprlist -> exprlist , expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    ,               reduce using rule 94 (exprlist -> exprlist , expr .)
+    )               reduce using rule 94 (exprlist -> exprlist , expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 202
+
+    (108) variable -> ID ( expr , expr . )
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    )               shift and go to state 213
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 203
+
+    (92) dimitem -> ID ( INTEGER , INTEGER ) .
+    ,               reduce using rule 92 (dimitem -> ID ( INTEGER , INTEGER ) .)
+    NEWLINE         reduce using rule 92 (dimitem -> ID ( INTEGER , INTEGER ) .)
+
+
+state 204
+
+    (16) command -> DEF FN ( error ) = expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    NEWLINE         reduce using rule 16 (command -> DEF FN ( error ) = expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 205
+
+    (17) command -> DEF FN ( ID ) = error .
+    NEWLINE         reduce using rule 17 (command -> DEF FN ( ID ) = error .)
+
+
+state 206
+
+    (18) command -> DEF FN ( ID ) = expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    NEWLINE         reduce using rule 18 (command -> DEF FN ( ID ) = expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+state 207
+
+    (24) command -> FOR ID = expr TO expr error .
+    NEWLINE         reduce using rule 24 (command -> FOR ID = expr TO expr error .)
+
+
+state 208
+
+    (27) command -> FOR ID = expr TO expr optstep .
+    NEWLINE         reduce using rule 27 (command -> FOR ID = expr TO expr optstep .)
+
+
+state 209
+
+    (84) optstep -> empty .
+    NEWLINE         reduce using rule 84 (optstep -> empty .)
+
+
+state 210
+
+    (85) optstep -> STEP . expr
+    (51) expr -> . variable
+    (52) expr -> . - expr
+    (53) expr -> . ( expr )
+    (54) expr -> . BLTIN ( STRING )
+    (55) expr -> . BLTIN ( _4_exprlist_optional )
+    (58) expr -> . FLOAT
+    (59) expr -> . INTEGER
+    (60) expr -> . expr ^ expr
+    (61) expr -> . expr / expr
+    (62) expr -> . expr * expr
+    (63) expr -> . expr - expr
+    (64) expr -> . expr + expr
+    (65) expr -> . variable + INTEGER
+    (66) expr -> . variable + variable
+    (67) expr -> . variable + STRING
+    (68) expr -> . STRING + variable
+    (69) expr -> . STRING + STRING
+    (108) variable -> . ID ( expr , expr )
+    (109) variable -> . ID ( expr )
+    (110) variable -> . ID
+    -               shift and go to state 47
+    (               shift and go to state 48
+    BLTIN           shift and go to state 49
+    FLOAT           shift and go to state 50
+    INTEGER         shift and go to state 43
+    STRING          shift and go to state 105
+    ID              shift and go to state 51
+
+    expr                           shift and go to state 214
+    variable                       shift and go to state 46
+
+state 211
+
+    (25) command -> FOR ID = expr TO error optstep .
+    NEWLINE         reduce using rule 25 (command -> FOR ID = expr TO error optstep .)
+
+
+state 212
+
+    (26) command -> FOR ID = error TO expr optstep .
+    NEWLINE         reduce using rule 26 (command -> FOR ID = error TO expr optstep .)
+
+
+state 213
+
+    (108) variable -> ID ( expr , expr ) .
+    +               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    GT              reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    GE              reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    NE              reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    =               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    LE              reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    LT              reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    ^               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    /               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    *               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    -               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    ,               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    ;               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    NEWLINE         reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    )               reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    TO              reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    THEN            reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    error           reduce using rule 108 (variable -> ID ( expr , expr ) .)
+    STEP            reduce using rule 108 (variable -> ID ( expr , expr ) .)
+
+
+state 214
+
+    (85) optstep -> STEP expr .
+    (60) expr -> expr . ^ expr
+    (61) expr -> expr . / expr
+    (62) expr -> expr . * expr
+    (63) expr -> expr . - expr
+    (64) expr -> expr . + expr
+    NEWLINE         reduce using rule 85 (optstep -> STEP expr .)
+    ^               shift and go to state 98
+    /               shift and go to state 99
+    *               shift and go to state 100
+    -               shift and go to state 101
+    +               shift and go to state 102
+
+
+Conflicts:
+
+shift/reduce conflict for + in state 46 resolved as shift

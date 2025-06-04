@@ -1,0 +1,3 @@
+10 INPUT I$
+20 PRINT I$
+30 END
