@@ -1,5 +1,0 @@
-10 LET I$ = "--" + "pepe"
-13 LET A$ = I$ + "s"
-20 PRINT A$
-30 PRINT "HI!  I'M ELIZA.  WHAT'S YOUR PROBLEM?"
-40 END
