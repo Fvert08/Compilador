@@ -3,7 +3,7 @@ import math
 import random
 
 from typing import Dict, Union
-from basast import *
+from AST import *
 from rich import print
 
 class BasicExit(BaseException):

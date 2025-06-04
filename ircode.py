@@ -1,8 +1,8 @@
 import sys 
-from baslex import Lexer
-from basparse import Parser
-from basast import *
-from interp import Interpreter
+from lexer import Lexer
+from parser import Parser
+from AST import *
+from maquinaPila import Interpreter
 from rich import print
 
 

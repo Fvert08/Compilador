@@ -1,7 +1,7 @@
 # basrender.py
 from graphviz import Digraph
 from typing import Union
-from basast import *
+from AST import *
 
 class DotRender(Visitor):
     print("\n--DotRender--\n")

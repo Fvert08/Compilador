@@ -1,7 +1,7 @@
 import unittest
-from basparse import Parser
-from baslex import Lexer
-from basast import *
+from parser import Parser
+from lexer import Lexer
+from AST import *
 # Importa todas las clases AST necesarias
 
 

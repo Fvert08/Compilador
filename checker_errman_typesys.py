@@ -5,10 +5,10 @@
 # código fuente, informes de errores, etc.
 from rich      import print
 
-from baslex    import Lexer
-from basparse  import Parser
-from basinterp import Interpreter
-from basast    import *
+from lexer    import Lexer
+from parser  import Parser
+from Interp_dir_AST import Interpreter
+from AST    import *
 
 class Context:
   def __init__(self):

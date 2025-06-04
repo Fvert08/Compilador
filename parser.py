@@ -1,9 +1,9 @@
 from rich import print
 import sly
 
-from baslex    import Lexer
-from basast    import *
-from basrender import DotRender
+from lexer    import Lexer
+from AST    import *
+from VisualAST import DotRender
 
 class Parser(sly.Parser):
     print("\n--Parser--\n")
